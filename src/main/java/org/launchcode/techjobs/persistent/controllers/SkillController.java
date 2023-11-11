@@ -20,14 +20,14 @@ public class SkillController {
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("employers", skillRepository.findAll());
-        return "employers/index";
+        model.addAttribute("skills", skillRepository.findAll());
+        return "skills/index";
     }
 
     @GetMapping("add")
     public String displayAddSkillForm(Model model) {
         model.addAttribute(new Skill());
-        return "employers/add";
+        return "skills/add";
     }
 
     @PostMapping("add")
@@ -35,12 +35,12 @@ public class SkillController {
                                          Errors errors, Model model) {
 
         if (errors.hasErrors()) {
-            return "employers/add";
+            model.addAttribute("skills", skillRepository.findAll());
+            return "skills/add";
         } else {
             skillRepository.save(newSkill);
+            return "redirect:";
         }
-
-        return "redirect:";
     }
 
     @GetMapping("view/{skillId}")
